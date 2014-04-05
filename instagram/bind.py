@@ -1,14 +1,14 @@
 import urllib
-from oauth2 import OAuth2Request
+from .oauth2 import OAuth2Request
 import re
-from json_import import simplejson
+from .json_import import simplejson
 
 re_path_template = re.compile('{\w+}')
 
 
 def encode_string(value):
     return value.encode('utf-8') \
-                        if isinstance(value, unicode) else str(value)
+                        if isinstance(value, str) else str(value)
 
 
 class InstagramClientError(Exception):
@@ -64,7 +64,7 @@ def bind_method(**config):
                 except IndexError:
                     raise InstagramClientError("Too many arguments supplied")
 
-            for key, value in kwargs.iteritems():
+            for key, value in kwargs.items():
                 if value is None:
                     continue
                 if key in self.parameters:
@@ -79,7 +79,7 @@ def bind_method(**config):
                 name = variable.strip('{}')
 
                 try:
-                    value = urllib.quote(self.parameters[name])
+                    value = urllib.parse.quote(self.parameters[name])
                 except KeyError:
                     raise Exception('No parameter value found for path variable: %s' % name)
                 del self.parameters[name]

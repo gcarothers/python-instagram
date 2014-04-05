@@ -1,4 +1,4 @@
-from helper import timestamp_to_datetime
+from .helper import timestamp_to_datetime
 
 
 class ApiModel(object):
@@ -9,9 +9,6 @@ class ApiModel(object):
         entry_str_dict = dict([(str(key), value) for key, value in entry.items()])
         return cls(**entry_str_dict)
 
-    def __repr__(self):
-        return unicode(self).encode('utf8')
-
 
 class Image(ApiModel):
 
@@ -20,7 +17,7 @@ class Image(ApiModel):
         self.height = height
         self.width = width
 
-    def __unicode__(self):
+    def __str__(self):
         return "Image: %s" % self.url
 
 
@@ -28,13 +25,13 @@ class Media(ApiModel):
 
     def __init__(self, id=None, **kwargs):
         self.id = id
-        for key, value in kwargs.iteritems():
+        for key, value in kwargs.items():
             setattr(self, key, value)
 
     def get_standard_resolution_url(self):
         return self.images['standard_resolution'].url
 
-    def __unicode__(self):
+    def __str__(self):
         return "Media: %s" % self.id
 
     @classmethod
@@ -43,7 +40,7 @@ class Media(ApiModel):
 
         new_media.user = User.object_from_dictionary(entry['user'])
         new_media.images = {}
-        for version, version_info in entry['images'].iteritems():
+        for version, version_info in entry['images'].items():
             new_media.images[version] = Image.object_from_dictionary(version_info)
 
         if 'user_has_liked' in entry:
@@ -83,16 +80,16 @@ class Media(ApiModel):
 class Tag(ApiModel):
     def __init__(self, name, **kwargs):
         self.name = name
-        for key, value in kwargs.iteritems():
+        for key, value in kwargs.items():
             setattr(self, key, value)
 
-    def __unicode__(self):
+    def __str__(self):
         return "Tag: %s" % self.name
 
 
 class Comment(ApiModel):
     def __init__(self, *args, **kwargs):
-        for key, value in kwargs.iteritems():
+        for key, value in kwargs.items():
             setattr(self, key, value)
 
     @classmethod
@@ -103,7 +100,7 @@ class Comment(ApiModel):
         id = entry['id']
         return Comment(id=id, user=user, text=text, created_at=created_at)
 
-    def __unicode__(self):
+    def __str__(self):
         return "Comment: %s said \"%s\"" % (self.user.username, self.text)
 
 
@@ -112,14 +109,14 @@ class Point(ApiModel):
         self.latitude = latitude
         self.longitude = longitude
 
-    def __unicode__(self):
+    def __str__(self):
         return "Point: (%s, %s)" % (self.latitude, self.longitude)
 
 
 class Location(ApiModel):
     def __init__(self, id, *args, **kwargs):
         self.id = id
-        for key, value in kwargs.iteritems():
+        for key, value in kwargs.items():
             setattr(self, key, value)
 
     @classmethod
@@ -133,7 +130,7 @@ class Location(ApiModel):
                        name=entry.get('name', ''))
         return location
 
-    def __unicode__(self):
+    def __str__(self):
         return "Location: %s (%s)" % (self.id, self.point)
 
 
@@ -141,10 +138,10 @@ class User(ApiModel):
 
     def __init__(self, id, *args, **kwargs):
         self.id = id
-        for key, value in kwargs.iteritems():
+        for key, value in kwargs.items():
             setattr(self, key, value)
 
-    def __unicode__(self):
+    def __str__(self):
         return "User: %s" % self.username
 
 
@@ -155,7 +152,7 @@ class Relationship(ApiModel):
         self.outgoing_status = outgoing_status
         self.target_user_is_private = target_user_is_private
 
-    def __unicode__(self):
+    def __str__(self):
         follows = False if self.outgoing_status == 'none' else True
         followed = False if self.incoming_status == 'none' else True
 
