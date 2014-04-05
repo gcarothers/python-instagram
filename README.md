@@ -2,6 +2,8 @@ python-instagram
 ======
 A Python client for the Instagram REST and Search APIs
 
+[![Build Status](https://travis-ci.org/gcarothers/python-instagram.svg?branch=master)](https://travis-ci.org/gcarothers/python-instagram)
+
 Installation
 -----
 pip install python-instagram
