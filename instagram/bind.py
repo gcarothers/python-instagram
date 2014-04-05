@@ -1,4 +1,4 @@
-import urllib
+import six.moves.urllib as urllib
 from .oauth2 import OAuth2Request
 import re
 from .json_import import simplejson

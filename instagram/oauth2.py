@@ -1,5 +1,5 @@
 from .json_import import simplejson
-import urllib
+import six.moves.urllib as urllib
 from httplib2 import Http
 import mimetypes
 
