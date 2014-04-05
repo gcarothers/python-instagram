@@ -6,7 +6,7 @@ import simplejson
 import time
 import getpass
 import unittest
-import urllib.parse
+import six.moves.urllib as urllib
 from instagram import client, oauth2, InstagramAPIError
 
 TEST_AUTH = False
